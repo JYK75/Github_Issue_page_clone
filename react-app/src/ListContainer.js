@@ -1,3 +1,4 @@
+import axios from "axios";
 import cx from "clsx";
 
 import styles from "./ListContainer.module.css";
@@ -8,12 +9,24 @@ import ListItemLayout from "./components/ListItemLayout";
 import Pagination from "./components/Pagination";
 import OpenClosedFilters from "./OpenClosedFilters";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ListContainer() {
   const [inputValue, setInputValue] = useState("is:pr is:open");
-  const [list, setList] = useState(/**data */);
+  const [list, setList] = useState([]);
+  const [checked, setChecked] = useState();
   const [page, setPage] = useState(1);
+
+  async function getData() {
+    const { data } = await axios.get(
+      `https://api.github.com/repos/facebook/react/issues`,
+    );
+    setList(data);
+  }
+
+  useEffect(() => {
+    getData();
+  }, []); //Dom이 render 된 후에
 
   return (
     <>
@@ -44,16 +57,14 @@ export default function ListContainer() {
             }}
           />
         </ListItemLayout>
-        <div className={styles.container}>
+        {list.map((item) => (
           <ListItem
-            badges={[
-              {
-                color: "red",
-                title: "Bug",
-              },
-            ]}
+            key={item.id}
+            data={item}
+            checked={checked}
+            onClickCheckBox={() => setChecked((checked) => !checked)}
           />
-        </div>
+        ))}
       </div>
       <div className={styles.paginationContainer}>
         <Pagination

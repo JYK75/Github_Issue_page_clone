@@ -1,24 +1,32 @@
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+
 import styles from "./ListItem.module.css";
 import ListItemLayout from "./ListItemLayout";
 import Badge from "./Badge";
 
 export default function ListItem({
   checked,
-  onChangeCheckBox,
+  onClickCheckBox,
   onClickTitle,
-  badges,
+  data,
 }) {
+  const badges = data.labels;
+  const state = data.state === "open" ? "opened" : "closed";
+  const date = data.state === "open" ? data.created_at : data.closed_at;
+  dayjs.extend(relativeTime);
+
   return (
-    <ListItemLayout>
+    <ListItemLayout checked={checked} onClick={onClickCheckBox}>
       <div>
         <div role="button" onClick={onClickTitle} className={styles.title}>
-          Issue Example
-          {badges &&
-            badges.map((badgeProps, idx) => (
-              <Badge key={idx} {...badgeProps} />
-            ))}
+          {data.title}
+          {badges.length > 0 &&
+            badges.map((props, idx) => <Badge {...props} key={`${idx}`} />)}
         </div>
-        <div className={styles.description}># Discription</div>
+        <div className={styles.description}>
+          #{data.number} {state} {dayjs(date).fromNow()} by {data.user.login}
+        </div>
       </div>
     </ListItemLayout>
   );
