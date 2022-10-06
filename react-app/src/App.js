@@ -1,5 +1,6 @@
 import styles from "./App.module.css";
 
+import Nav from "./Nav";
 import Header from "./Header";
 import ListContainer from "./ListContainer";
 import Footer from "./Footer";
@@ -7,7 +8,7 @@ import Footer from "./Footer";
 function App() {
   return (
     <>
-      <div className={styles.nav}>Nav</div>
+      <Nav />
       <Header />
       <ListContainer />
       <Footer />

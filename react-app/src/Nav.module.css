@@ -1,0 +1,38 @@
+.nav {
+  padding: 16px 32px;
+  background: #24292f;
+  display: flex;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  align-items: center;
+}
+
+.logo {
+  margin-right: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.input {
+  box-shadow: none;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  width: 30%;
+  padding: 5px 12px;
+  line-height: 20px;
+  margin-right: 15px;
+  background: transparent;
+  color: #ffffff;
+}
+
+.input::placeholder {
+  color: #ffffff;
+}
+
+.txt 
+{
+  color: #ffffff;
+  margin-right: 15px;
+  font-weight: 700;
+}
+

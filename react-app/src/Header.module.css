@@ -4,10 +4,22 @@
   box-shadow: inset 0 -1px hsla(210, 18%, 87%, 1);
 }
 
+
 .buttonContainer {
   display: flex;
   margin-bottom: 20px;
-  justify-content: flex-end;
+  align-items: center;
+}
+
+.nametab {
+  color: #0969da;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.buttonWrap {
+  display: flex;
+  margin-left: auto;
 }
 
 .circle {
