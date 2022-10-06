@@ -60,7 +60,7 @@ function ListFilter() {
       <Modal
         opened={showModal}
         onClose={() => setShowModal(false)}
-        placeholder="Filter labels"
+        placeholder="Filter labels!"
       />
     </>
   );
