@@ -22,3 +22,7 @@ ul {
   border-bottom: #fa4549 2px solid;
   font-weight:  800;
 }
+
+.link {
+  text-decoration: none;
+}
