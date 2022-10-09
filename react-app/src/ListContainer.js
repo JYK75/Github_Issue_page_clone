@@ -8,6 +8,7 @@ import ListFilter from "./components/ListFilter";
 import ListItemLayout from "./components/ListItemLayout";
 import Pagination from "./components/Pagination";
 import OpenClosedFilters from "./OpenClosedFilters";
+import { GITHUB_API } from "./api.js";
 
 import { useState, useEffect } from "react";
 
@@ -16,17 +17,22 @@ export default function ListContainer() {
   const [list, setList] = useState([]);
   const [checked, setChecked] = useState();
   const [page, setPage] = useState(1);
+  const [isOpenMode, setIsOpenMode] = useState(true);
+  const [params, setParams] = useState();
 
-  async function getData() {
+  async function getData(params) {
     const { data } = await axios.get(
-      `https://api.github.com/repos/facebook/react/issues`,
+      `${GITHUB_API}/repos/facebook/react/issues`,
+      {
+        params,
+      },
     );
     setList(data);
   }
 
   useEffect(() => {
-    getData();
-  }, []); //Dom이 render 된 후에
+    getData({ page, state: isOpenMode ? "open" : "closed", ...params });
+  }, [page, isOpenMode, params]); //Dom이 render 된 후에
 
   return (
     <>
@@ -47,13 +53,17 @@ export default function ListContainer() {
             New Issue
           </Button>
         </div>
-        <OpenClosedFilters />
+        <OpenClosedFilters
+          isOpenMode={isOpenMode}
+          onClickMode={setIsOpenMode}
+        />
         <ListItemLayout className={styles.listFilter}>
           <ListFilter
-            onChangeFilter={(filteredData) => {
+            onChangeFilter={(params) => {
               // 필터링된 요소에 맞게 데이터를 불러오기
               // const data = getData('필터링된 정보')
               // setList(data);
+              setParams(params);
             }}
           />
         </ListItemLayout>

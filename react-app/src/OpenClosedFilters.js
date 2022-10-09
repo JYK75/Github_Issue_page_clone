@@ -1,27 +1,19 @@
-import { useState } from "react";
 import cx from "clsx";
 
 import styles from "./OpenClosedFilters.module.css";
 
-export default function OpenClosedFilters({ data }) {
-  const [isOpenMode, setIsOpenMode] = useState(true);
-
-  const openModeDataSize = 1;
-  const closeModeDataSize = 2;
-
+export default function OpenClosedFilters({ isOpenMode, onClickMode }) {
   return (
     <>
       <OpenClosedFilter
-        size={openModeDataSize}
         state="Open"
         selected={isOpenMode}
-        onClick={() => setIsOpenMode(true)}
+        onClick={() => onClickMode(true)}
       />
       <OpenClosedFilter
-        size={closeModeDataSize}
         state="Closed"
         selected={!isOpenMode}
-        onClick={() => setIsOpenMode(false)}
+        onClick={() => onClickMode(false)}
       />
     </>
   );
