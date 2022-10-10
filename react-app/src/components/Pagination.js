@@ -2,8 +2,8 @@ import cx from "clsx";
 import styles from "./Pagination.module.css";
 
 export default function Pagination({
-  currentPage,
   maxPage,
+  currentPage,
   onClickPageButton,
 }) {
   return (

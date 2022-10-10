@@ -14,34 +14,26 @@ const TabList = [
 ];
 
 export default function Tabs() {
-  const [selectedTabIdx, setSelectedTabIdx] = useState(1);
-
   const { pathname } = useLocation();
 
   return (
     <ul className={styles.tabList}>
       {TabList.map((tab, idx) => (
         <Tab
-          key={`${idx}`}
+          key={idx}
           item={tab}
-          selected={pathname === tab.pathname}
-          onClick={() => {
-            setSelectedTabIdx(idx);
-          }}
+          selected={(pathname === "/" ? "/issue" : pathname) === tab.pathname}
         />
       ))}
     </ul>
   );
 }
 
-function Tab({ item, selected, onClick, number }) {
+function Tab({ item, selected, number }) {
   return (
     <li>
       <Link to={item.pathname} className={styles.link}>
-        <button
-          onClick={onClick}
-          className={cx(styles.tab, { [styles.selected]: selected })}
-        >
+        <button className={cx(styles.tab, { [styles.selected]: selected })}>
           <span>{item.name}</span>
           {number && <div className={styles.circle}>{number}</div>}
         </button>
