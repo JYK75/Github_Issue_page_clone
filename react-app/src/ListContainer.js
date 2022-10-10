@@ -17,25 +17,23 @@ export default function ListContainer() {
   const [inputValue, setInputValue] = useState("is:pr is:open");
   const [list, setList] = useState([]);
   const [checked, setChecked] = useState();
-  const [isOpenMode, setIsOpenMode] = useState(true);
-  const [params, setParams] = useState();
+  //const [isOpenMode, setIsOpenMode] = useState(true);
+  //const [params, setParams] = useState();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = parseInt(searchParams.get("page"), 10);
+  const page = parseInt(searchParams.get("page") ?? "1", 10);
+  const state = searchParams.get("state");
 
   async function getData(params) {
-    const { data } = await axios.get(
-      `${GITHUB_API}/repos/facebook/react/issues`,
-      {
-        params,
-      },
-    );
-    setList(data);
+    const data = await axios.get(`${GITHUB_API}/repos/facebook/react/issues`, {
+      params,
+    });
+    setList(data.data);
   }
 
   useEffect(() => {
-    getData({ page, state: isOpenMode ? "open" : "closed", ...params });
-  }, [page, isOpenMode, params]); //Dom이 render 된 후에
+    getData(searchParams);
+  }, [searchParams]); //Dom이 render 된 후에
 
   return (
     <>
@@ -57,8 +55,8 @@ export default function ListContainer() {
           </Button>
         </div>
         <OpenClosedFilters
-          isOpenMode={isOpenMode}
-          onClickMode={setIsOpenMode}
+          isOpenMode={state !== "closed"}
+          onClickMode={(mode) => setSearchParams({ mode })}
         />
         <ListItemLayout className={styles.listFilter}>
           <ListFilter
@@ -66,7 +64,7 @@ export default function ListContainer() {
               // 필터링된 요소에 맞게 데이터를 불러오기
               // const data = getData('필터링된 정보')
               // setList(data);
-              setParams(params);
+              setSearchParams(params);
             }}
           />
         </ListItemLayout>
@@ -81,11 +79,11 @@ export default function ListContainer() {
       </div>
       <div className={styles.paginationContainer}>
         <Pagination
-          maxPage={10}
           currentPage={page}
           onClickPageButton={(pageNumber) =>
             setSearchParams({ page: pageNumber })
           }
+          maxPage={10}
         />
       </div>
     </>
