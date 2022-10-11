@@ -11,8 +11,28 @@ import Code from "./pages/Code";
 import Security from "./pages/Security";
 import Actions from "./pages/Actions";
 import styles from "./App.module.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { GITHUB_API } from "./api";
+import { UserContext } from "./context/UserContext";
 
 function App() {
+  // const [user, setUser] = useState();
+
+  // useEffect(() => {
+  //   getUserInfo();
+  // }, []);
+
+  // async function getUserInfo() {
+  //   const data = await axios.get(`${GITHUB_API}/user`, {
+  //     headers: {
+  //       Authorization: process.env.REACT_APP_GITHUB_TOKEN,
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+
+  //   setUser(data.data);
+  // }
   return (
     <>
       <Nav />
