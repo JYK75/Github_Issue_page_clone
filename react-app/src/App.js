@@ -10,6 +10,7 @@ import PullRequest from "./pages/PullRequest";
 import Code from "./pages/Code";
 import Security from "./pages/Security";
 import Actions from "./pages/Actions";
+import styles from "./App.module.css";
 
 function App() {
   return (
