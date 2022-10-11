@@ -1,31 +1,46 @@
+import { useRef } from "react";
+
 import cx from "clsx";
+
 import Button from "../components/Button";
 import styles from "./CreateIssue.module.css";
+import TextField from "../components/TextField";
 
 export default function CreateIssue() {
+  const ref = useRef();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (e.target.elements.title.value === "") {
+      alert("타이틀을 입력해주세요");
+      ref.current.focus();
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.avatar}></div>
       <div className={cx(styles.inputWrapper, styles.border)}>
-        <input
-          className={cx(styles.input, styles.border)}
-          placeholder="Title"
-        ></input>
-        <textarea
-          className={cx(styles.input, styles.textarea, styles.border)}
-          placeholder="Leave a comment"
-        ></textarea>
-        <div className={styles.buttonWrapper}>
-          <Button
-            style={{
-              fontSize: "14px",
-              backgroundColor: "green",
-              color: "white",
-            }}
-          >
-            Submit new issue
-          </Button>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <TextField ref={ref} name="title" placeholder="Title" />
+          <TextField
+            type="textarea"
+            name="body"
+            placeholder="Leave a comment"
+          />
+          <div className={styles.buttonWrapper}>
+            <Button
+              type="submit"
+              style={{
+                fontSize: "14px",
+                backgroundColor: "green",
+                color: "white",
+              }}
+            >
+              Submit new issue
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
   );
